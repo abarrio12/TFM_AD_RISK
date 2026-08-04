@@ -8,6 +8,8 @@ data/processed/*
 venv/
 __pycache__/
 *.pyc
+venv2/
+
 
 # Docker
 docker/postgres_data/
