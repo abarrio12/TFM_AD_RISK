@@ -1,0 +1,19 @@
+# Datos: NO se suben (términos de uso de OASIS-3 lo prohíben)
+data/raw/*
+data/processed/*
+!data/raw/.gitkeep
+!data/processed/.gitkeep
+
+# Entornos y cachés de Python
+venv/
+__pycache__/
+*.pyc
+
+# Docker
+docker/postgres_data/
+
+# Credenciales / configuración local
+.env
+
+# Sistema
+.DS_Store

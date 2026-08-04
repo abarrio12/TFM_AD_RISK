@@ -1,0 +1,10 @@
+ollama
+pydantic
+pandas
+scikit-learn
+xgboost
+shap
+streamlit
+psycopg2-binary
+pgvector
+python-dotenv
