@@ -1,13 +1,9 @@
 """
 Módulo de extracción estructurada de informes clínicos mediante LLM local (Ollama).
 
-Punto del índice del TFM que cubre: 3.2 (Estrategia de Prompt Engineering)
-y sienta la base de 3.4 (monitorización/depuración ETL) y 6.1 (evaluación
-frente a gold set).
-
 Requisitos:
     pip install ollama pydantic
-    ollama pull qwen3:8b     # o llama3.2:3b para pruebas rápidas en hardware modesto
+    ollama pull qwen3:8b     # o llama3.2:3b para pruebas rápidas en hardware con poca ram
 """
 
 from __future__ import annotations
@@ -62,8 +58,7 @@ class FichaPaciente(BaseModel):
 
 
 # --------------------------------------------------------------------------
-# Prompt: reglas explícitas para minimizar alucinación. Ver 3.2 en la
-# memoria para la justificación de cada regla.
+# Prompt: reglas explícitas para minimizar alucinación. 
 # --------------------------------------------------------------------------
 
 PROMPT_SISTEMA = """Eres un sistema de extracción de datos clínicos. Tu única tarea \
@@ -85,19 +80,19 @@ revision_humana_requerida como true.
 # Extracción con validación y reintentos.
 # Ollama no garantiza que la respuesta cumpla el schema al 100% (puede
 # cortar la generación a mitad de un campo), así que el reintento con el
-# error inyectado de vuelta al modelo es la pieza que da fiabilidad real.
+# error alimentado de vuelta al modelo es lo que nos ayuda a tener fiabilidad.
 # --------------------------------------------------------------------------
 
 def extraer_ficha_paciente(
     texto_informe: str,
-    modelo: str = "qwen3:8b",
+    modelo: str = "llama3.2:3b", # cambiar a qwen3:8b cuando acceso a oasis
     max_intentos: int = 3,
 ) -> tuple[Optional[FichaPaciente], int]:
     """Extrae una FichaPaciente a partir del texto libre de un informe.
 
     Devuelve (ficha, intentos_usados). Si ficha es None tras max_intentos,
     el documento queda para revisión manual: ese conteo es exactamente el
-    dato que alimenta la evaluación frente al gold set (sección 6.1).
+    dato que alimenta la evaluación frente al gold set.
     """
     mensajes = [
         {"role": "system", "content": PROMPT_SISTEMA},
