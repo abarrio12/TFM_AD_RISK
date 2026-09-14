@@ -1,21 +1,24 @@
-# Datos: NO se suben (términos de uso de OASIS-3 lo prohíben)
-data/raw/*
-data/processed/*
-!data/raw/.gitkeep
-!data/processed/.gitkeep
-
-# Entornos y cachés de Python
+# Entorno virtual
 venv/
-__pycache__/
-*.pyc
 venv2/
 
+# Datos de ADNI (acceso restringido, no se redistribuyen)
+data/raw/*.csv
 
-# Docker
-docker/postgres_data/
+# Credenciales
+.streamlit/secrets.toml
+src/dashboard/.streamlit/secrets.toml
 
-# Credenciales / configuración local
-.env
+# Python
+__pycache__/
+*.pyc
+
+# Resultados generados (se regeneran con main.py)
+resultados/
+
+# Jupyter
+.ipynb_checkpoints/
 
 # Sistema
 .DS_Store
+Thumbs.db

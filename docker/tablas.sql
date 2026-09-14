@@ -9,8 +9,15 @@ CREATE TABLE IF NOT EXISTS pacientes (
     ficha JSONB NOT NULL,
     resumen_texto TEXT NOT NULL,
     embedding VECTOR(768) NOT NULL,
+    hash_documento TEXT UNIQUE,
     creado_en TIMESTAMP DEFAULT now()
 );
+
+-- Índice HNSW: búsqueda por similitud rápida según crece la tabla.
+-- "vector_cosine_ops" porque comparamos los vectores por distancia coseno.
+CREATE INDEX IF NOT EXISTS pacientes_embedding_idx
+ON pacientes USING hnsw (embedding vector_cosine_ops);
+
 
 -- Índice HNSW: búsqueda por similitud rápida según crece la tabla.
 -- "vector_cosine_ops" porque comparamos los vectores por distancia coseno.

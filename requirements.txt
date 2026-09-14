@@ -1,6 +1,8 @@
 ollama
 pydantic
+numpy
 pandas
+matplotlib
 scikit-learn
 xgboost
 shap
@@ -8,3 +10,8 @@ streamlit
 psycopg2-binary
 pgvector
 python-dotenv
+umap-learn
+plotly
+pdfplumber
+python-docx
+biopython
