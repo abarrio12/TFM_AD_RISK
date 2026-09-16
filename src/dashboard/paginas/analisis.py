@@ -74,7 +74,7 @@ else:
 # ----------------------------------------------------------------
 st.markdown("---")
 st.subheader("Escenario clínico")
-st.caption("Cambia el MMSE y vuelve a calcularse la predicción real con el modelo entrenado -- no una fórmula aproximada.")
+st.caption("Cambia el MMSE y vuelve a calcularse la predicción real con el modelo entrenado.")
 
 with st.spinner("Cargando NeuroInsight..."):
     df_pob, modelo, codificador, explicador, columnas_modelo, fuente_datos = cargar_todo()
@@ -127,13 +127,13 @@ if st.session_state.get("ultima_fila") is not None:
     fig_sensibilidad = aplicar_estilo_grafico(fig_sensibilidad)
     st.plotly_chart(fig_sensibilidad, use_container_width=True)
     st.caption(
-        "Lee la curva de izquierda a derecha: cada línea muestra la probabilidad estimada para una clase "
-        "si el único cambio fuera el MMSE. La línea punteada es el valor real y la discontinua el escenario elegido."
+        "Cada línea muestra la probabilidad estimada para una clase al variar mmse. "
+        "La línea punteada es el valor real y la discontinua el escenario elegido."
     )
 
     cambio = prob_clase_actual_escenario - prob_clase_actual_real
     if mmse_hipotetico == int(mmse_actual):
-        st.info(f"MMSE = {mmse_hipotetico} (igual al valor actual del paciente) -- sin cambio de escenario.")
+        st.info(f"MMSE = {mmse_hipotetico} (igual al valor actual del paciente)")
     else:
         direccion = "sube" if cambio > 0 else "baja"
         st.success(
@@ -141,11 +141,6 @@ if st.session_state.get("ultima_fila") is not None:
             f"**{clase_escenario}** como clase más probable. La probabilidad de la clase actualmente predicha "
             f"({pred['clase_predicha']}) {direccion} de {prob_clase_actual_real*100:.1f}% a {prob_clase_actual_escenario*100:.1f}%."
         )
-    st.caption(
-        "Escenario calculado a partir de `modelo.predict_proba()` sobre los mismos datos, "
-        "con una envolvente monotónica para que un MMSE mayor no incremente el riesgo de deterioro. "
-        "La predicción base no se modifica."
-    )
 else:
     st.info("No hay datos estructurados del paciente para simular un escenario.")
 
@@ -155,12 +150,9 @@ else:
 st.markdown("---")
 st.subheader("Trayectoria comparada con pacientes similares")
 st.caption(
-    "No es una predicción para este paciente concreto -- eso exigiría un modelo entrenado "
-    "específicamente para pronosticar trayectorias, que no tenemos (ver 6.3 de la memoria). "
-    "Esto es distinto y sí honesto: la evolución real, observada en las visitas de seguimiento, "
-    "de pacientes de ADNI que empezaron con un perfil similar al de este paciente (mismo "
-    "diagnóstico basal, MMSE parecido). La banda sombreada es la variación real observada entre "
-    "esos pacientes, no un cálculo estadístico de intervalo de confianza sobre el modelo."
+    "No es una predicción para este paciente concreto. Es la evolución real, observada en las visitas, "
+    "de pacientes de ADNI que empezaron con un perfil similar al de este paciente. " \
+    "La banda sombreada es la variación real observada entre esos pacientes."
 )
 
 raiz_datos = Path(__file__).parent.parent.parent.parent / "data" / "raw"
@@ -221,6 +213,6 @@ if st.session_state.get("ultima_fila") is not None and ruta_adni_completo.exists
         else:
             st.info("No hay suficientes pacientes similares en el dataset con seguimiento a largo plazo para mostrar esta comparación de forma fiable.")
     else:
-        st.info("Falta el MMSE del paciente, o el diagnóstico no es CN/MCI/AD -- no se puede construir la comparación.")
+        st.info("Falta el MMSE del paciente, o el diagnóstico no es CN/MCI/AD.")
 else:
-    st.info("No se encontró el fichero completo de ADNI, o no hay datos del paciente -- esta sección necesita ambos.")
+    st.info("No se encontró el fichero completo de ADNI, o no hay datos del paciente.")

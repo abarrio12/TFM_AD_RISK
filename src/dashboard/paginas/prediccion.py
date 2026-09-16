@@ -106,10 +106,9 @@ st.caption("Introduce los datos de un paciente y obtén una predicción explicad
 if st.session_state.get("ultima_prediccion"):
     _p = st.session_state["ultima_prediccion"]
     st.info(
-        f"Ya tienes un paciente activo cargado ({_p['clase_predicha']} · {_p['probabilidad']*100:.1f}%, "
-        f"{_p.get('fecha', '')}) -- puedes verlo en Análisis, Notas o Literatura. Esta página siempre "
-        "empieza en blanco para calcular un paciente **nuevo**; no sobrescribe el activo hasta que pulses "
-        "\"Predecir riesgo\" o \"Extraer y predecir\" otra vez."
+        f"Ya tiene un paciente activo ({_p['clase_predicha']} · {_p['probabilidad']*100:.1f}%, "
+        f"{_p.get('fecha', '')}). Pulsar "
+        "\"Predecir riesgo\" o \"Extraer y predecir\" si quiere analizar uno nuevo."
     )
 
 modo = st.radio(
@@ -123,8 +122,7 @@ ficha_extraida = None
 
 if modo == "Rellenar a mano":
     st.caption(
-        "Estos son exactamente los campos que usa el modelo entrenado (ver Resumen del dataset → "
-        "Importancia de variables) -- no una selección arbitraria; el modelo no tiene ninguna otra entrada."
+        "Estos son exactamente los campos que usa el modelo entrenado."
     )
     col_form, _ = st.columns([1, 1])
     with col_form:
@@ -171,7 +169,7 @@ else:
                     _animacion = mostrar_cargando(
                         "Extrayendo información estructurada mediante el modelo de lenguaje local. "
                         "Esta operación puede requerir varios minutos, en particular en la primera "
-                        "solicitud tras iniciar el servicio, ya que el modelo debe cargarse en memoria."
+                        "solicitud, ya que el modelo debe cargarse en memoria."
                     )
                     ficha, intentos = extraer_ficha_paciente(texto, host=host_ollama if host_ollama else None)
                     _animacion.empty()
@@ -313,9 +311,9 @@ if fila is not None:
         fig_gauge.update_layout(height=240, margin=dict(t=20, b=10, l=30, r=30))
         st.plotly_chart(fig_gauge, use_container_width=True)
         if clase_predicha == "CN":
-            st.caption("Fondo verde: CN es un resultado tranquilizador. El porcentaje mostrado está calibrado y no equivale por sí solo a una certeza clínica.")
+            st.caption("El porcentaje mostrado está calibrado y no equivale por sí solo a una certeza clínica.")
         else:
-            st.caption(f"Fondo rojo: {clase_predicha} implica algún grado de deterioro. El porcentaje está calibrado y no equivale por sí solo a una certeza clínica.")
+            st.caption(f"{clase_predicha} implica algún grado de deterioro. El porcentaje está calibrado y no equivale por sí solo a una certeza clínica.")
 
     with col_b:
         st.caption("Específico de **este** paciente (no el promedio general -- para eso, ver Resumen del dataset → Importancia de variables).")
@@ -364,10 +362,7 @@ if fila is not None:
         )
         if faltantes_actuales:
             st.caption(
-                "Las variables marcadas \"(no disponible)\" no se dieron en el informe -- "
-                "el modelo puede usar la propia ausencia del dato como señal (p. ej., si en los "
-                "datos de entrenamiento no tener un biomarcador medido está asociado a un tipo de "
-                "diagnóstico), no un valor concreto de esa variable."
+                "Las variables marcadas \"(no disponible)\" no se dieron en el informe. "
             )
 
     # ----------------------------------------------------------------
@@ -378,7 +373,7 @@ if fila is not None:
     st.caption(
         "Comparamos cada valor disponible con los pacientes reales del conjunto de entrenamiento. "
         "Cada caja representa el 50% central de un grupo diagnóstico y los puntos muestran valores "
-        "atípicos; el rombo negro es este paciente. Así puedes ver si su MMSE o su hipocampo se "
+        "atípicos; el rombo negro es este paciente. Así puede ver si su MMSE o su hipocampo se "
         "parecen más a CN, MCI o AD. Esta comparación es descriptiva y no sustituye a la predicción."
     )
 

@@ -1,6 +1,6 @@
 """
-Página de contacto -- permite a usuarios enviar consultas o feedback.
-Requiere configurar SMTP con una cuenta de Gmail personal (NO cuenta @ucm.es).
+Página de contacto --> permite a usuarios enviar consultas o feedback.
+Requiere configurar SMTP con una cuenta de Gmail personal.
 """
 
 import smtplib
@@ -166,10 +166,9 @@ st.markdown("---")
 
 st.subheader("Información del Proyecto")
 st.markdown("""
-- **Tipo**: Trabajo de Fin de Máster
-- **Ámbito**: Ciencia de Datos e IA en Medicina
-- **Enfoque**: Diagnóstico de Alzheimer asistido por IA
+- **Tipo**: Trabajo de Fin de Máster. Máster en IA, Big Data y Data Science
+- **Centro**: Universidad Complutense de Madrid 
+- **Enfoque**: Herramienta de apoyo a la valoración clínica de Alzheimer asistido por IA
 - **Dataset**: ADNI (Alzheimer's Disease Neuroimaging Initiative)
-- **Institución**: Universidad Complutense de Madrid
 - **Año**: 2026
 """)

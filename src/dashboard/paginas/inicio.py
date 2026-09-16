@@ -102,7 +102,7 @@ st.markdown(
 )
 
 # Secciones con acordeón usando st.expander (más limpio)
-st.markdown("## Explorá las funcionalidades")
+st.markdown("## Explora las funcionalidades")
 
 with st.expander("**Predicción Individual**", expanded=False):
     st.markdown("""
@@ -122,70 +122,53 @@ with st.expander("**Predicción Individual**", expanded=False):
 
 with st.expander("**Análisis e Interpretabilidad**", expanded=False):
     st.markdown("""
-    Entiende cómo evolucionarían los pacientes y qué cambios impactarían más.
+    Entiende cómo evolucionarían los pacientes y qué cambios influirían más.
     
-    - **Trayectoria comparada**: evolución real de pacientes de ADNI con un perfil inicial similar al del paciente activo (mismo diagnóstico, MMSE parecido), no una proyección individual
+    - **Trayectoria comparada**: evolución real de pacientes de ADNI con un perfil inicial similar al del paciente activo, no una proyección individual
     - **Análisis de sensibilidad**: "¿Qué pasaría si...?" (Ej: si el MMSE bajara de 25 a 20)
     - **Rango de variación real**: banda que muestra cuánto varió esa evolución entre esos pacientes similares
     - **Factores clave**: Identifica qué biomarcadores son más relevantes para este paciente
     """)
 
-with st.expander("**Notas Clínicas y Documentación**", expanded=False):
+with st.expander("**Notas e Informes Clínicos**", expanded=False):
     st.markdown("""
     Mantén un registro organizado de cada paciente.
     
     - **Notas personalizadas**: Escribe observaciones clínicas adjuntas a cada predicción
     - **Generador de informes** (página aparte "Generar informe"): descarga un DOCX con las
-        secciones que elijas -- datos del paciente y predicción, literatura relevante, notas
-        clínicas. Texto y tablas, sin gráficos incluidos en el documento.
-    - **Historial**: Seguimiento longitudinal (comparar predicciones anteriores)
+        secciones que elijas.
+    - **Historial**: Guarda los pacientes estudiados en cada sesión.
     """)
 
-with st.expander("**Síntesis de Literatura e Investigación**", expanded=False):
+with st.expander("**Búsqueda de Literatura**", expanded=False):
     st.markdown("""
     Accede a evidencia científica relacionada con tus casos.
     
     - **Búsqueda automática de papers**: Busca publicaciones en PubMed relacionadas con:
-        - Los biomarcadores detectados
-        - El tipo de deterioro cognitivo predicho
         - El perfil específico del paciente
-    - **Búsqueda en PubMed en vivo**: consulta directamente la API pública de NCBI según los biomarcadores y el diagnóstico del paciente activo
+        - El tipo de deterioro cognitivo predicho
+    - **Búsqueda en PubMed en vivo**: consulta directamente la API pública de NCBI.
     """)
 
 with st.expander("**Resumen del Dataset**", expanded=False):
     st.markdown(f"""
-    Explorá las estadísticas del conjunto de datos de entrenamiento.
-    
-    Visualizá distribuciones, correlaciones y perfiles característicos de cada grupo:
-    - Estadísticas descriptivas por grupo diagnóstico
-    - Distribuciones de biomarcadores (Tau, Abeta, P-tau)
-    - Análisis del volumen hipocampal
-    - Frecuencias de APOE4 y otras variables demográficas
-    - Matrices de correlación entre variables
-    
+    Explora las estadísticas del conjunto de datos de entrenamiento.
     **Dataset utilizado:** {fuente_datos}
     """)
 
 with st.expander("**Recursos y Enlaces**", expanded=False):
     st.markdown("""
-    Referencias externas de interés.
-    
-    Acceso a herramientas y información complementaria:
-    - Publicaciones sobre biomarcadores de Alzheimer
-    - Bases de datos de investigación (ADNI, AIBL, BioFIND)
-    - Guías de interpretación clínica
-    - Información para pacientes y familiares
-    - Herramientas complementarias de evaluación cognitiva
+    Referencias externas que puede resultar de interés.
+
     """)
 
 # Nota sobre el TFM
 st.markdown(
     """
     <div class="tfm-note">
-    <strong>📚 Nota académica:</strong> Esta herramienta se enmarca en un Trabajo de Fin de Máster 
+    <strong> Nota académica:</strong> Esta herramienta se enmarca en un Trabajo de Fin de Máster 
     en el ámbito de ciencias de datos e inteligencia artificial aplicada a la medicina. 
-    Es una herramienta de <strong>apoyo clínico experimental</strong> y no reemplaza el juicio médico profesional.
-    Úsala como complemento en tu proceso diagnóstico, no como sustituto.
+    Es una herramienta de <strong>apoyo a la valoración clínica</strong> y no reemplaza el juicio médico profesional.
     </div>
     """,
     unsafe_allow_html=True,
