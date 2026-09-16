@@ -15,3 +15,5 @@ plotly
 pdfplumber
 python-docx
 biopython
+lightgbm
+catboost

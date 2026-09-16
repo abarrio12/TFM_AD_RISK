@@ -49,7 +49,10 @@ def preparar_features(df: pd.DataFrame):
     pacientes que forzar que todos tengan todo relleno.
     """
     columnas_esenciales = [c for c in ["edad", "mmse"] if c in df.columns]
-    datos = df.dropna(subset=columnas_esenciales + ["diagnostico"]).copy()
+    datos = df.dropna(subset=columnas_esenciales).copy()
+    # filtro ya presente en main.py pero se agrega aqui por dejarlo consistente
+    # para futuras ejecuciones
+    datos = datos[datos["diagnostico"] != "Desconocido"] 
     datos["apoe4_positivo"] = datos["apoe4"].apply(apoe4_a_feature)
 
     columnas_modelo = [c for c in VARIABLES_MODELO if c in datos.columns]

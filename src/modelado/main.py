@@ -8,45 +8,61 @@ Uso:
 """
 
 import sys
+from pathlib import Path
+
 
 from clasificacion import entrenar_modelo, evaluar_modelo, explicar_con_shap, preparar_features
 from clustering import ejecutar_clustering, graficar_clusters
-from comparacion_modelos import comparar_modelos, evaluar_efecto_calibracion
 from datos import cargar_datos_reales, generar_datos_sinteticos
 from eda import completitud_variables, graficar_completitud, graficar_distribuciones, resumen_estadistico
+from comparacion_modelos import comparar_modelos, comparar_modelos_cv, evaluar_efecto_calibracion
+
+# <raiz_del_proyecto>/data/raw para evitar rutas locales 
+RAIZ_PROYECTO = Path(__file__).resolve().parent.parent.parent
+RUTA_ADNI_DEFECTO = str(RAIZ_PROYECTO / "data" / "raw" / "ADNIMERGE_11Aug2026.csv")
+RUTA_PLASMA_DEFECTO = str(RAIZ_PROYECTO / "data" / "raw" / "UPENN_PLASMA_FUJIREBIO_QUANTERIX_11Aug2026.csv") 
 
 
 def main():
-    if len(sys.argv) > 2:
+    if sys.argv[1:] == ["--sintetico"]:
+        print("Usando datos SINTÉTICOS (--sintetico).")
+        df = generar_datos_sinteticos()
+    elif len(sys.argv) == 1:
+        print("Sin argumentos: usando las rutas por defecto.")
+        df = cargar_datos_reales(RUTA_ADNI_DEFECTO, fuente="adni", ruta_plasma=RUTA_PLASMA_DEFECTO)
+        df = df[df["diagnostico"] != "Desconocido"].copy()
+    elif len(sys.argv) == 3:
         ruta_adni, ruta_plasma = sys.argv[1], sys.argv[2]
         print(f"Cargando datos reales desde {ruta_adni} (+ plasma: {ruta_plasma})")
         df = cargar_datos_reales(ruta_adni, fuente="adni", ruta_plasma=ruta_plasma)
         df = df[df["diagnostico"] != "Desconocido"].copy()
     else:
-        print("Sin CSV indicado: usando datos sintéticos para probar")
-        df = generar_datos_sinteticos()
+        sys.exit("Uso: py main.py  |  py main.py ruta_adni ruta_plasma  |  py main.py --sintetico")
 
     print(f"\n{len(df)} pacientes con diagnóstico válido.")
+   
 
-    print("\n========== 4.2 EDA ==========")
+    print("\n========== EDA ==========")
     resumen_estadistico(df)
     completitud_variables(df)
     graficar_distribuciones(df)
     graficar_completitud(df)
 
-    print("\n========== 4.3.1 Clustering ==========")
+    print("\n========== Clustering ==========")
     df_clusters = ejecutar_clustering(df)
     graficar_clusters(df_clusters)
 
-    print("\n========== 4.3.2 Clasificación (modelo final: XGBoost calibrado) ==========")
+    print("\n========== Clasificación (modelo final: XGBoost calibrado) ==========")
     X, y, codificador = preparar_features(df)
     modelo, X_train, X_test, y_train, y_test = entrenar_modelo(X, y)
 
-    print("\n========== 4.3.2 Comparación con otros modelos ==========")
+    print("\n========== Comparación con otros modelos ==========")
     comparar_modelos(X, y)
+    comparar_modelos_cv(X, y)
     evaluar_efecto_calibracion(X, y)
 
-    print("\n========== 4.4 Evaluación del modelo final ==========")
+
+    print("\n========== Evaluación del modelo final (XGBoost) ==========")
     evaluar_modelo(modelo, X_test, y_test, codificador)
     explicar_con_shap(modelo, X_test)
 

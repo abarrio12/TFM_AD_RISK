@@ -129,6 +129,12 @@ def comparar_modelos_cv(X: pd.DataFrame, y: pd.Series, n_pliegues: int = 5, carp
 
     tabla_resumen = pd.DataFrame(filas_resumen).sort_values("exactitud_media", ascending=False).reset_index(drop=True)
 
+    # prueba t pareada: mide si existe diferencia significativa entre las medias de dos grupos relacionados
+    from scipy.stats import ttest_rel
+    t_stat, p_valor = ttest_rel(resultados_por_pliegue["CatBoost"], resultados_por_pliegue["XGBoost"])
+    print(f"\nPrueba t pareada CatBoost vs XGBoost: t={t_stat:.3f}, p={p_valor:.3f}")
+
+
     Path(carpeta_salida).mkdir(parents=True, exist_ok=True)
     fig, ax = plt.subplots(figsize=(7.5, 5))
     for nombre, scores in resultados_por_pliegue.items():
