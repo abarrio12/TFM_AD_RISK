@@ -61,19 +61,26 @@ st.markdown(
 
 # Sección Hero con logo y título
 ruta_logo = Path(__file__).parent.parent / "assets" / "logo_sidebar.svg"
+col1, col2, col3 = st.columns([0.5, 4, 0.5])
 
-col1, col2, col3 = st.columns([1, 2, 1])
 with col2:
     st.markdown('<div class="hero-header">', unsafe_allow_html=True)
-    
+
     if ruta_logo.exists():
         import base64
         svg_b64 = base64.b64encode(ruta_logo.read_bytes()).decode()
+
         st.markdown(
-            f'<div style="text-align:center;"><img src="data:image/svg+xml;base64,{svg_b64}" width="720"></div>',
+            f'''
+            <div style="text-align:center;">
+                <img 
+                    src="data:image/svg+xml;base64,{svg_b64}" 
+                    style="width:100%; max-width:1100px; height:auto;"
+                >
+            </div>
+            ''',
             unsafe_allow_html=True,
         )
-    
     st.markdown(
         '<div class="hero-subtitle">Herramienta de Apoyo al Diagnóstico de Alzheimer</div>',
         unsafe_allow_html=True,

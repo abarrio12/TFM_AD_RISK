@@ -86,7 +86,7 @@ def aplicar_estilo_grafico(fig):
     fig.update_layout(
         font=dict(size=14, color="#1A1A2E"),
         legend=dict(font=dict(size=13, color="#1A1A2E")),
-        title=dict(font=dict(size=16, color="#1A1A2E")),
+        title_font=dict(size=16, color="#1A1A2E"),
     )
     return fig
 

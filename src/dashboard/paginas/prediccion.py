@@ -295,7 +295,8 @@ if fila is not None:
         fig_gauge = go.Figure(go.Indicator(
             mode="gauge+number",
             value=probabilidad * 100,
-            number={"suffix": "%"},
+            number={"suffix": "%", "font": {"size": 36}},
+            domain={"x": [0, 1], "y": [0, 1]},
             gauge={
                 "axis": {"range": [0, 100]},
                 "bar": {"color": "#37474F"},
@@ -303,7 +304,8 @@ if fila is not None:
             },
         ))
         fig_gauge = aplicar_estilo_grafico(fig_gauge)
-        fig_gauge.update_layout(height=240, margin=dict(t=20, b=10, l=30, r=30))
+        fig_gauge.update_layout(height=240, margin=dict(t=10, b=10, l=30, r=30))
+
         st.plotly_chart(fig_gauge, use_container_width=True)
         if clase_predicha == "CN":
             st.caption("El porcentaje mostrado está calibrado y no equivale por sí solo a una certeza clínica.")
