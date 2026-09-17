@@ -20,7 +20,7 @@ st.markdown(
     <style>
         .hero-header {
             text-align: center;
-            padding: 40px 20px;
+            padding: 20px 20px 30px 20px;
             margin-bottom: 30px;
         }
         .hero-subtitle {
@@ -34,6 +34,18 @@ st.markdown(
             color: #999;
             margin-top: 10px;
             font-style: italic;
+        }
+        
+        /* Contenedor y tamaño ampliado del logo */
+        .logo-container {
+            text-align: center;
+            margin: 0 auto 20px auto;
+            width: 100%;
+        }
+        .logo-container svg {
+            width: 100% !important;
+            max-width: 750px !important; /* Ajusta aquí el tamaño del logo */
+            height: auto !important;
         }
         
         .info-box {
@@ -59,38 +71,23 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
-# Sección Hero con logo y título
+# Sección Hero construida en un único bloque HTML para evitar artefactos
 ruta_logo = Path(__file__).parent.parent / "assets" / "logo_sidebar.svg"
-col1, col2, col3 = st.columns([0.5, 4, 0.5])
 
-with col2:
-    st.markdown('<div class="hero-header">', unsafe_allow_html=True)
+logo_html = ""
+if ruta_logo.exists():
+    contenido_svg = ruta_logo.read_text(encoding="utf-8")
+    logo_html = f'<div class="logo-container">{contenido_svg}</div>'
 
-    if ruta_logo.exists():
-        import base64
-        svg_b64 = base64.b64encode(ruta_logo.read_bytes()).decode()
+hero_html = f"""
+<div class="hero-header">
+    {logo_html}
+    <div class="hero-subtitle">Herramienta de Apoyo al Diagnóstico de Alzheimer</div>
+    <div class="hero-tagline">Para profesionales y estudiantes de ciencias de la salud</div>
+</div>
+"""
 
-        st.markdown(
-            f'''
-            <div style="text-align:center;">
-                <img 
-                    src="data:image/svg+xml;base64,{svg_b64}" 
-                    style="width:100%; max-width:1100px; height:auto;"
-                >
-            </div>
-            ''',
-            unsafe_allow_html=True,
-        )
-    st.markdown(
-        '<div class="hero-subtitle">Herramienta de Apoyo al Diagnóstico de Alzheimer</div>',
-        unsafe_allow_html=True,
-    )
-    st.markdown(
-        '<div class="hero-tagline">Para profesionales y estudiantes de ciencias de la salud</div>',
-        unsafe_allow_html=True,
-    )
-    
-    st.markdown('</div>', unsafe_allow_html=True)
+st.markdown(hero_html, unsafe_allow_html=True)
 
 # Información introductoria
 st.markdown(
