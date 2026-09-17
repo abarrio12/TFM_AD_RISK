@@ -14,7 +14,7 @@ from carga import mostrar_cabecera_sidebar
 mostrar_cabecera_sidebar()
 
 st.title("Contacto")
-st.caption("¿Preguntas o sugerencias? Ponte en contacto con nosotros")
+st.caption("¿Preguntas o sugerencias? Póngase en contacto con nosotros")
 
 st.markdown(
     """
@@ -44,21 +44,21 @@ st.markdown('<div style="margin-bottom: 30px;"></div>', unsafe_allow_html=True)
 
 with st.form("contact_form", clear_on_submit=True):
     nombre = st.text_input(
-        "Tu nombre",
+        "Nombre",
         placeholder="Juan Pérez",
         help="Nombre completo o profesión"
     )
     
     email = st.text_input(
-        "Tu email",
+        "E-mail",
         placeholder="juan@ejemplo.com",
-        help="Tu correo electrónico (para que podamos responder)"
+        help="Su correo electrónico (para que podamos responderle)"
     )
     
     asunto = st.selectbox(
         "Tipo de consulta",
         [
-            "Selecciona una opción",
+            "Seleccione una opción",
             "Pregunta técnica",
             "Sugerencia de mejora",
             "Reporte de error",
@@ -69,9 +69,9 @@ with st.form("contact_form", clear_on_submit=True):
     
     mensaje = st.text_area(
         "Mensaje",
-        placeholder="Cuéntanos qué te gustaría saber o sugerir...",
+        placeholder="Cuéntenos qué le gustaría saber o sugerir...",
         height=150,
-        help="Sé lo más específico posible para ayudarnos a entenderte mejor"
+        help="Sea lo más específico posible para ayudarnos a entenderle mejor"
     )
     
     submitted = st.form_submit_button(
@@ -84,13 +84,13 @@ if submitted:
     # Validaciones básicas
     errores = []
     if not nombre.strip():
-        errores.append("Por favor ingresa tu nombre")
+        errores.append("Por favor ingrese su nombre")
     if not email.strip() or "@" not in email:
-        errores.append("Por favor ingresa un email válido")
+        errores.append("Por favor ingrese un email válido")
     if not mensaje.strip():
-        errores.append("Por favor escribe un mensaje")
+        errores.append("Por favor escriba un mensaje")
     if asunto == "Selecciona una opción":
-        errores.append("Por favor selecciona el tipo de consulta")
+        errores.append("Por favor seleccione el tipo de consulta")
 
     if errores:
         for error in errores:
@@ -103,7 +103,7 @@ if submitted:
         if not remitente or not contraseña:
             st.markdown(
                 '<div class="error-message">⚠️ El servicio de email no está configurado. '
-                'Contacta directamente a: abarriol20@gmail.com</div>',
+                'Contacte directamente a: abarriol20@gmail.com</div>',
                 unsafe_allow_html=True,
             )
         else:

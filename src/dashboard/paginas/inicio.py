@@ -102,12 +102,12 @@ st.markdown(
 )
 
 # Secciones con acordeón usando st.expander (más limpio)
-st.markdown("## Explora las funcionalidades")
+st.markdown("## Explore las funcionalidades")
 
 with st.expander("**Predicción Individual**", expanded=False):
     st.markdown("""
-    Obtén predicciones personalizadas para tus pacientes. Introduce los datos de un paciente 
-    (manualmente o sube su informe PDF) y recibe:
+    Obtenga predicciones personalizadas para sus pacientes. Introduzca los datos de un paciente 
+    (manualmente o subiendo su informe PDF) para ver:
     
     - **Diagnóstico predicho**:
         - **CN** = Cognitivamente Normal (sin deterioro)
@@ -122,7 +122,7 @@ with st.expander("**Predicción Individual**", expanded=False):
 
 with st.expander("**Análisis e Interpretabilidad**", expanded=False):
     st.markdown("""
-    Entiende cómo evolucionarían los pacientes y qué cambios influirían más.
+    Entienda cómo evolucionarían los pacientes y qué cambios influirían más.
     
     - **Trayectoria comparada**: evolución real de pacientes de ADNI con un perfil inicial similar al del paciente activo, no una proyección individual
     - **Análisis de sensibilidad**: "¿Qué pasaría si...?" (Ej: si el MMSE bajara de 25 a 20)
@@ -132,27 +132,26 @@ with st.expander("**Análisis e Interpretabilidad**", expanded=False):
 
 with st.expander("**Notas e Informes Clínicos**", expanded=False):
     st.markdown("""
-    Mantén un registro organizado de cada paciente.
+    Mantenga un registro organizado de cada paciente.
     
-    - **Notas personalizadas**: Escribe observaciones clínicas adjuntas a cada predicción
-    - **Generador de informes** (página aparte "Generar informe"): descarga un DOCX con las
+    - **Notas personalizadas**: Escriba observaciones clínicas adjuntas a cada predicción
+    - **Generador de informes** (página aparte "Generar informe"): descargue un DOCX con las
         secciones que elijas.
-    - **Historial**: Guarda los pacientes estudiados en cada sesión.
+    - **Historial**: Guarde los pacientes estudiados en cada sesión. No se mantiene al cerrar.
     """)
 
 with st.expander("**Búsqueda de Literatura**", expanded=False):
     st.markdown("""
-    Accede a evidencia científica relacionada con tus casos.
+    Acceda a evidencia científica relacionada con sus casos.
     
     - **Búsqueda automática de papers**: Busca publicaciones en PubMed relacionadas con:
         - El perfil específico del paciente
         - El tipo de deterioro cognitivo predicho
-    - **Búsqueda en PubMed en vivo**: consulta directamente la API pública de NCBI.
     """)
 
 with st.expander("**Resumen del Dataset**", expanded=False):
     st.markdown(f"""
-    Explora las estadísticas del conjunto de datos de entrenamiento.
+    Explore las estadísticas del conjunto de datos de entrenamiento.
     **Dataset utilizado:** {fuente_datos}
     """)
 

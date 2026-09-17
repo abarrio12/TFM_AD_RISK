@@ -21,7 +21,7 @@ notas = st.text_area(
     "Observaciones clínicas",
     value=st.session_state["notas_clinicas"],
     height=220,
-    placeholder="Escribe aquí observaciones, cambios de tratamiento, valoración funcional, etc...",
+    placeholder="Escriba aquí observaciones, cambios de tratamiento, valoración funcional, etc...",
 )
 st.session_state["notas_clinicas"] = notas
 
@@ -32,4 +32,4 @@ if notas.strip():
     with st.expander("Vista previa de las notas guardadas"):
         st.write(notas)
 else:
-    st.info("Todavía no has escrito ninguna nota para este paciente.")
+    st.info("Todavía no ha escrito ninguna nota para este paciente.")

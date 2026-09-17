@@ -24,7 +24,7 @@ notas = st.session_state.get("notas_clinicas", "")
 st.title("Generar informe")
 st.caption(f"Paciente activo: {pred['clase_predicha']} · {pred['probabilidad'] * 100:.1f}%")
 
-st.subheader("¿Qué quieres incluir en el informe?")
+st.subheader("¿Qué quiere incluir en el informe?")
 incluir_prediccion = st.checkbox("Predicción y datos del paciente", value=True)
 factores_shap_disponibles = st.session_state.get("ultimos_factores_shap")
 incluir_porque = st.checkbox(

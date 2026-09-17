@@ -74,7 +74,7 @@ else:
 # ----------------------------------------------------------------
 st.markdown("---")
 st.subheader("Escenario clínico")
-st.caption("Cambia el MMSE y vuelve a calcularse la predicción real con el modelo entrenado.")
+st.caption("Cambie el MMSE para simular distintos escenarios clínicos.")
 
 with st.spinner("Cargando NeuroInsight..."):
     df_pob, modelo, codificador, explicador, columnas_modelo, fuente_datos = cargar_todo()

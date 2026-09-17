@@ -39,23 +39,9 @@ with st.expander("Sobre el conjunto de datos (ADNI)", expanded=True):
         "objetivo de desarrollar marcadores para la detección y el seguimiento tempranos de la "
         "enfermedad."
     )
-    st.markdown("🔗 [adni.loni.usc.edu](https://adni.loni.usc.edu)")
-    st.markdown(
-        "**Cita (formato APA):** Alzheimer's Disease Neuroimaging Initiative. (2004–2026). "
+    st.markdown("🔗 Alzheimer's Disease Neuroimaging Initiative. (2004–2026). "
         "*ADNI database* [Conjunto de datos]. University of Southern California, "
-        "Laboratory of Neuro Imaging. https://adni.loni.usc.edu"
-    )
-    st.caption(
-        "ADNI no tiene un único artículo canónico que citar (es un consorcio, no una publicación) -- "
-        "esta es la forma recomendada de citar la base de datos en sí. El texto de reconocimiento "
-        "oficial en inglés, exigido para cualquier uso de estos datos, es el siguiente:"
-    )
-    st.caption(
-        "Data used in preparation of this article were obtained from the Alzheimer's Disease "
-        "Neuroimaging Initiative (ADNI) database (adni.loni.usc.edu). As such, the investigators "
-        "within ADNI contributed to the design and implementation of ADNI and/or provided data "
-        "but did not participate in analysis or writing of this report."
-    )
+        "Laboratory of Neuro Imaging. [adni.loni.usc.edu](https://adni.loni.usc.edu)")
 
 # --------------------------------------------------------------------------
 # KPIs
@@ -92,10 +78,9 @@ with col_izq:
 with col_der:
     st.subheader("Subgrupos (clustering)")
     st.caption(
-        "Cada punto es un paciente, agrupado automáticamente (KMeans) según lo parecido de su perfil "
-        "clínico completo. Los ejes (UMAP 1 / UMAP 2) no tienen un significado propio -- son una "
-        "proyección a 2 dimensiones de muchas variables a la vez, solo para poder dibujarlo; lo que "
-        "importa es qué tan cerca o lejos caen los puntos entre sí, no la posición exacta de cada eje."
+        "Cada punto es un paciente, agrupado según la similitud de su perfil "
+        "clínico completo. Los ejes (UMAP 1 / UMAP 2) no tienen un significado propio — son una "
+        "proyección de muchas variables a la vez. Lo importante es lo lejos o cerca que caen los puntos entre sí."
     )
     proyeccion, etiqueta_eje = calcular_proyeccion(df)
     df_plot = df.loc[df[["edad", "mmse", "tau_pg_ml", "abeta42_pg_ml", "hipocampo_mm3"]].dropna().index].copy()
@@ -149,8 +134,7 @@ st.subheader("Evolución del MMSE por grupo diagnóstico")
 st.caption(
     "Descriptivo, no predictivo: media observada en las visitas de seguimiento reales de ADNI, "
     "agrupada por el diagnóstico que tenía cada paciente en su visita basal. No es una proyección "
-    "para un paciente individual -- para eso haría falta un modelo distinto, entrenado "
-    "específicamente para pronosticar trayectorias (ver 6.3, líneas futuras)."
+    "para un paciente individual."
 )
 
 raiz_datos = Path(__file__).parent.parent.parent.parent / "data" / "raw"

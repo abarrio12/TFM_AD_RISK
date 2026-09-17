@@ -102,18 +102,17 @@ if identidad_activa != st.session_state.get("_prediccion_formulario_paciente"):
     st.session_state["_prediccion_formulario_paciente"] = identidad_activa
 
 st.title("Predicción individual")
-st.caption("Introduce los datos de un paciente y obtén una predicción explicada (sección 5.2)")
+st.caption("Introduzca los datos de un paciente para obtener una predicción")
 
 if st.session_state.get("ultima_prediccion"):
     _p = st.session_state["ultima_prediccion"]
     st.info(
         f"Ya tiene un paciente activo ({_p['clase_predicha']} · {_p['probabilidad']*100:.1f}%, "
-        f"{_p.get('fecha', '')}). Pulsar "
-        "\"Predecir riesgo\" o \"Extraer y predecir\" si quiere analizar uno nuevo."
+        f"{_p.get('fecha', '')}). Para un nuevo paciente, rellene los datos manualmente o suba el PDF."
     )
 
 modo = st.radio(
-    "¿Cómo quieres introducir los datos del paciente?",
+    "¿Cómo quiere introducir los datos del paciente?",
     ["Rellenar a mano", "Subir informe en PDF"],
     horizontal=True,
 )
@@ -151,7 +150,7 @@ if modo == "Rellenar a mano":
             }])[columnas_modelo].astype(float)
 
 else:
-    archivo = st.file_uploader("Sube el informe clínico (PDF)", type="pdf")
+    archivo = st.file_uploader("Suba su informe clínico (PDF)", type="pdf")
     if archivo is not None and st.button("Extraer y predecir", type="primary"):
         # Validar tamaño del archivo (máximo 100MB - la extracción de palabras clave lo optimiza)
         tamaño_mb = archivo.size / (1024 * 1024)
@@ -167,11 +166,6 @@ else:
                     _animacion.empty()
                     st.error("No se pudo extraer texto de este PDF. Compruebe si se trata de un documento escaneado sin capa de texto.")
                 else:
-                    _animacion = mostrar_cargando(
-                        "Extrayendo información estructurada mediante el modelo de lenguaje local. "
-                        "Esta operación puede requerir varios minutos, en particular en la primera "
-                        "solicitud, ya que el modelo debe cargarse en memoria."
-                    )
                     ficha, intentos = extraer_ficha_paciente(texto, host=host_ollama if host_ollama else None)
                     _animacion.empty()
                     if ficha is None:
@@ -317,7 +311,7 @@ if fila is not None:
             st.caption(f"{clase_predicha} implica algún grado de deterioro. El porcentaje está calibrado y no equivale por sí solo a una certeza clínica.")
 
     with col_b:
-        st.caption("Específico de **este** paciente (no el promedio general -- para eso, ver Resumen del dataset → Importancia de variables).")
+        st.caption("Específico de **ESTE** paciente (no el promedio general).")
         valores_shap = explicador.shap_values(fila)
         if isinstance(valores_shap, list):
             fila_shap = valores_shap[indice_predicho][0]
@@ -356,7 +350,7 @@ if fila is not None:
         fig_shap.update_layout(margin=dict(t=40, b=10, l=10, r=10), height=280, coloraxis_showscale=False)
         st.plotly_chart(fig_shap, use_container_width=True)
         _direccion_roja = f"hacia {clase_predicha}" if clase_predicha != "CN" else "en contra de CN (hacia más deterioro)"
-        _direccion_verde = f"en contra de {clase_predicha}" if clase_predicha != "CN" else "hacia CN (más normalidad)"
+        _direccion_verde = f"en contra de {clase_predicha}" if clase_predicha != "CN" else "hacia CN (normalidad)"
         st.caption(
             f"Cada barra es una variable, ordenada por peso. **Rojo**: empuja {_direccion_roja}. "
             f"**Verde**: empuja {_direccion_verde}. La longitud de la barra es cuánto pesa esa variable."
@@ -433,7 +427,7 @@ if fila is not None:
             st.info("Volumen hipocampal no disponible en este informe")
 
 else:
-    st.info("Rellena los datos, o sube un PDF y pulsa el botón correspondiente, para ver una predicción.")
+    st.info("Rellene los datos, o suba un PDF y pulse el botón correspondiente, para ver una predicción.")
 
 st.divider()
 with st.expander("Glosario de siglas usadas en esta página"):

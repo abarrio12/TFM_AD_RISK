@@ -8,7 +8,7 @@ from carga import mostrar_cabecera_sidebar
 mostrar_cabecera_sidebar()
 
 st.title("Historial de pacientes")
-st.caption("Todos los pacientes que has analizado quedan guardados en esta sesión")
+st.caption("Todos los pacientes que ha analizado quedan guardados en esta sesión")
 
 historial = st.session_state.get("historial_pacientes", [])
 
