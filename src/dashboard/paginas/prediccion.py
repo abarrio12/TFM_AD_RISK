@@ -24,6 +24,7 @@ from carga import (
     aplicar_estilo_grafico,
     cargar_todo,
     mostrar_cabecera_sidebar,
+    mostrar_cargando
 )
 from clasificacion import apoe4_a_feature
 from extraccion_paciente import extraer_ficha_paciente
